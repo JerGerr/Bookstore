@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>Bookstore</title>
+</head>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+
+<body>
+	<div class="container">
+		<div class="well">
+			<h1>Bookstore</h1>
+			<div class="well">
+				<span th:inline="text">Welcome:<strong>
+						[[${#httpServletRequest.remoteUser}]]!</strong></span>
+			</div>
+			<form th:action="@{/logout}" method="post">
+				<input class="btn btn-danger" type="submit" value="Logout" />
+			</form>
+			<table class="table table-striped">
+				<tr>
+					<th>Author</th>
+					<th>Title</th>
+					<th>ISBN</th>
+					<th colspan='2'>Year</th>
+				</tr>
+				<tr th:each="book : ${books}">
+					<td th:text="${book.author}">Author</td>
+					<td th:text="${book.title}">Title</td>
+					<td th:text="${book.isbn}">ISBN</td>
+					<td th:text="${book.year}">Year</td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a
+						th:href="@{/delete/{id}(id=${book.id})}"><button
+								class="btn btn-danger">Delete</button></a></td>
+
+				</tr>
+			</table>
+		</div>
+		<hr />
+		<div class="well">
+			<h1>Add new book</h1>
+			<form class="form-control" action="#" th:action="@{/save}"
+				th:object="${book}" method="post">
+				<table>
+					<tr>
+						<td>Author</td>
+						<td><input class="form-control" type="text"
+							th:field="*{author}" /></td>
+					</tr>
+					<tr>
+						<td>Title</td>
+						<td><input class="form-control" type="text"
+							th:field="*{title}" /></td>
+					</tr>
+					<tr>
+						<td>ISBN</td>
+						<td><input class="form-control" type="text"
+							th:field="*{isbn}" /></td>
+					</tr>
+					<tr>
+						<td>Year</td>
+						<td><input class="form-control" type="number"
+							th:field="*{year}" /></td>
+					</tr>
+					<tr>
+						<td colspan='2'><input class="btn btn-success" type="submit"
+							value="Submit" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
