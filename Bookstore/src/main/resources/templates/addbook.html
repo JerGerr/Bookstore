@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>AddBook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Add book</h1>
+	<div>
+		<form th:object="${book}" th:action="@{save}" action="#" method="post">
+			<label for="Aname">Author</label> <input type="text" id="aname"
+				th:field="*{authorName}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="Bname">Title</label> <input type="text" id="Bname"
+				th:field="*{bookName}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="ISBN">ISBN</label> <input type="text" th:field="*{ISBN}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="pubYear">Year</label> <input type="text"
+				th:field="*{pubYear}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="Price">Price</label> <input type="text"
+				th:field="*{Price}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+
+			<label for="Category">Category</label> <select
+				th:field="*{Category}">
+				<option value="Political satire">Political satire</option>
+				<option value="Realism">Realism</option>
+				<option value="Science fiction">Science fiction</option>
+				<option value="Non-fiction">Non-fiction</option>
+			</select>
+			<div style="clear: both; display: block; height: 10px;"></div>
+
+			<input type="submit" value="Save"></input>
+		</form>
+	</div>
+</body>
+</html>
