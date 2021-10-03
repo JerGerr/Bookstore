@@ -1,12 +1,15 @@
 package com.example.bookstore.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Book {
@@ -18,27 +21,22 @@ public class Book {
 	private String ISBN;
 	private int pubYear;
 	private double Price;
-	private String categoryName;
 
 	@ManyToOne
-	@JoinColumn(name = "book_category_id")
-	private Category Category;
+	@JoinColumn(name = "categoryid")
+	@JsonManagedReference
+	private Category category;
 
 	public Book() {}
 
-	public Book(String authorName, String bookName, String ISBN, int pubYear, double Price, String categoryName) {
+	public Book(String authorName, String bookName, String ISBN, int pubYear, double Price, Category category) {
 		super();
 		this.authorName = authorName;
 		this.bookName = bookName;
 		this.ISBN = ISBN;
 		this.pubYear = pubYear;
 		this.Price = Price;
-		this.categoryName=categoryName;
-	}
-
-	public Book(String categoryName, Category Category) {
-		this.categoryName = categoryName;
-		this.Category = Category;
+		this.category = category;
 	}
 
 	public Long getId() {
@@ -89,24 +87,20 @@ public class Book {
 		this.Price = Price;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
 	public Category getCategory() {
-		return Category;
+		return category;
 	}
 
-	public void setCategory(Category Category) {
-		this.Category = Category;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override
-	public String toString() {
-		return "Book [id=" + id + ", authorName=" + authorName + ", bookName=" + bookName + ", ISBN=" + ISBN + ", pubYear=" + pubYear + ", Price" + Price + ", categoryName=" + categoryName + "]";
-	}
+	public String toString() 
+	{
+		if (this.category != null)
+			return "Book [id=" + id + ", authorName=" + authorName + ", bookName=" + bookName + ", ISBN=" + ISBN + ", pubYear=" + pubYear + ", Price" + Price + ", category =" + this.getCategory() + "]";
+		else
+			return "Book [id=" + id + ", authorName=" + authorName + ", bookName=" + bookName + ", ISBN=" + ISBN + ", pubYear=" + pubYear + ", Price" + Price + "]";
+	}	
 }

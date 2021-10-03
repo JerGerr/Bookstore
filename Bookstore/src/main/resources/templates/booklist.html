@@ -25,8 +25,7 @@
 			<td th:text="${book.ISBN}"></td>
 			<td th:text="${book.pubYear}"></td>
 			<td th:text="${book.Price}"></td>
-			<td th:text="${book.categoryName}"></td>
-
+			<td th:text="${book.category.name}"></td>
 
 			<td><a th:href="@{/delete/{id}(id=${book.id})}"
 				class="btn btn-danger">Delete</a></td>
@@ -36,3 +35,5 @@
 	<a href="/add" class="btn btn-success">Add Book</a>
 </body>
 </html>
+
+  	

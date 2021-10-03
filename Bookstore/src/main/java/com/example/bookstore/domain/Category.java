@@ -1,31 +1,36 @@
 package com.example.bookstore.domain;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "book_category")
 public class Category {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long categoryid;
-	private String categoryName;
+	private String name;
 	
-	@OneToMany(mappedBy = "Category", cascade = CascadeType.ALL)
-    private Set<Book> books;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	private List<Book> books;
+
 	
 	 public Category() {}
 
-		public Category(String categoryName) {
+		public Category(String name) {
 			super();
-			this.categoryName=categoryName;
+			this.name=name;
 		}
 
 		public Long getCategoryid() {
@@ -36,25 +41,25 @@ public class Category {
 			this.categoryid = categoryid;
 		}
 		
-		public String getCategoryName() {
-			return categoryName;
+		public String getName() {
+			return name;
 		}
 
-		public void setCategoryName(String categoryName) {
-			this.categoryName = categoryName;
+		public void setName(String name) {
+			this.name = name;
 		}
 		
-	    public Set<Book> getBooks() {
+	    public List<Book> getBooks() {
 	        return books;
 	    }
 
-	    public void setBooks(Set<Book> books) {
+	    public void setBooks(List<Book> books) {
 	        this.books = books;
 	    }
 		
 		@Override
 		public String toString() {
-			return "Category [categoryid=" + categoryid + ", categoryName=" + categoryName + "]";
+			return "Category [categoryid=" + categoryid + ", name=" + name + "]";
 		}
 	
 }
